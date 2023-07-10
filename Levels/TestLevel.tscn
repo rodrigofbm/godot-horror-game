@@ -11,3 +11,12 @@ size = Vector3(2.19575, 1, 11.19)
 
 [node name="Player" parent="." instance=ExtResource("1_4yxtf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.220485, 0)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08627, 2.01855, 0.757054)
+use_collision = true
+size = Vector3(1, 1, 14.6776)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.733125, 0.494123, -0.467301, 0, 0.687113, 0.726551, 0.680094, -0.532652, 0.503739, -17.4002, 9.22812, 0)
+shadow_enabled = true

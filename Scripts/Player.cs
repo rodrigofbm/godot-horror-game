@@ -6,16 +6,24 @@ namespace HorrorGame.Scripts;
 public partial class Player : CharacterBody3D
 {
 	private const float Speed = 5.0f;
+	private const float CrouchSpeed = 2.0f;
 	private const float JumpVelocity = 4.5f;
 	private const float MouseSensitivity = 3.0f;
+	public float CurrentSpeed { get; set; }
+
 	public Camera3D Camera3D { get; set; }
+	public bool IsCrouch { get; private set; }
+	public bool IsFlashlightOn { get; private set; }
+	public AnimationPlayer AnimationPlayer { get; set; }
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
 	public override void _Ready()
 	{
+		CurrentSpeed = Speed;
 		Camera3D = GetNode<Camera3D>("Camera3D");
+		AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
@@ -38,15 +46,17 @@ public partial class Player : CharacterBody3D
 		var direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 		if (direction != Vector3.Zero)
 		{
-			velocity.X = direction.X * Speed;
-			velocity.Z = direction.Z * Speed;
+			velocity.X = direction.X * CurrentSpeed;
+			velocity.Z = direction.Z * CurrentSpeed;
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, CurrentSpeed);
+			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, CurrentSpeed);
 		}
 
+		HandleCrouching();
+		HandleFlashlight();
 		Velocity = velocity;
 		MoveAndSlide();
 	}
@@ -63,6 +73,44 @@ public partial class Player : CharacterBody3D
 			// Vertical look
 			var xOffset = Camera3D.Rotation.X - mouseEventMouseMotion.Relative.Y / 1000f * MouseSensitivity;
 			Camera3D.Rotation = new Vector3(Mathf.Clamp(xOffset, -2f, 2f), Camera3D.Rotation.Y, Camera3D.Rotation.Z);
+		}
+	}
+
+	private void HandleCrouching()
+	{
+		if (Input.IsActionPressed(EInputKeyboard.Crouch.ToString()))
+		{
+			if (!IsCrouch)
+			{
+				AnimationPlayer.Play("Crouch");
+				IsCrouch = true;
+				CurrentSpeed = CrouchSpeed;
+			}
+		} else
+		{
+			var spaceState = GetWorld3D().DirectSpaceState;
+			var result = spaceState.IntersectRay(new PhysicsRayQueryParameters3D
+				{
+					From = Position,
+					To = new Vector3(Position.X, Position.Y + 2f, Position.Z),
+					Exclude = { GetRid() }
+				});
+			if (IsCrouch && result.Count <= 0)
+			{
+				AnimationPlayer.Play("UnCrouch");
+				IsCrouch = false;
+				CurrentSpeed = Speed;
+			}
+		}
+	}
+
+	private void HandleFlashlight()
+	{
+		if (Input.IsActionJustPressed(EInputKeyboard.Flashlight.ToString()))
+		{
+			AnimationPlayer.Play(IsFlashlightOn ? "FlashlightHide" : "FlashlightShow");
+
+			IsFlashlightOn = !IsFlashlightOn;
 		}
 	}
 }
