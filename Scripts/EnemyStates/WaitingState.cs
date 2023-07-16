@@ -11,6 +11,7 @@ public class WaitingState : IState
     public void Enter(CharacterBody3D character)
     {
         _enemy = (Enemy)character;
+        _enemy.Target = null;
     }
 
     public void Update(double delta)
@@ -29,5 +30,6 @@ public class WaitingState : IState
     public void Exit()
     {
         _enemy.IsWaitingTimeOut = false;
+        _enemy.Timer.Stop();
     }
 }

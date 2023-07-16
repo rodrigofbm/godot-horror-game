@@ -57,6 +57,10 @@ Crouch={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_8="Detectable"
+
 [rendering]
 
 renderer/rendering_method.mobile="gl_compatibility"

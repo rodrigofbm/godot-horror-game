@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://djvgig4fvhpxd"]
+[gd_scene load_steps=5 format=3 uid="uid://djvgig4fvhpxd"]
 
 [ext_resource type="PackedScene" uid="uid://b0omjetudctsg" path="res://Scenes/player.tscn" id="1_4yxtf"]
 [ext_resource type="PackedScene" uid="uid://bv1xc66v0ny68" path="res://Scenes/enemy.tscn" id="2_t0hs2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8ub6m"]
+font_size = 28
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_fu85w"]
 vertices = PackedVector3Array(-1.94863, 0.44461, 12.4367, -1.94863, 0.44461, 8.68667, -3.19863, 0.44461, 8.43667, -3.19863, 0.44461, -7.06333, -1.94863, 0.44461, -7.31333, -1.94863, 0.44461, -12.3133, -13.1986, 0.44461, -12.3133, -13.1986, 0.44461, -6.31333, -13.1986, 0.44461, 12.4367, -1.94863, 0.44461, 12.4367, -3.19863, 0.44461, 8.43667, -13.1986, 0.44461, 6.18667, -13.1986, 0.44461, 6.18667, -3.19863, 0.44461, 8.43667, -3.19863, 0.44461, 0.686667, -13.1986, 0.44461, -0.0633326, -3.19863, 0.44461, 0.686667, -3.19863, 0.44461, -7.06333, -13.1986, 0.44461, -6.31333, -13.1986, 0.44461, -0.0633326, -0.948626, 0.44461, 8.43667, -1.94863, 0.44461, 8.68667, -1.94863, 0.44461, 12.4367, 5.55137, 0.44461, 12.4367, -1.94863, 0.44461, -12.3133, -1.94863, 0.44461, -7.31333, -0.948626, 0.44461, -7.06333, 5.55137, 0.44461, -12.3133, -0.948626, 0.44461, 0.686667, -0.948626, 0.44461, 8.43667, 5.55137, 0.44461, 12.4367, 13.3014, 0.44461, 6.18667, 13.3014, 0.44461, -0.0633326, 13.3014, 0.44461, -6.31333, 5.55137, 0.44461, -12.3133, -0.948626, 0.44461, -7.06333, -0.948626, 0.44461, 0.686667, 13.3014, 0.44461, -0.0633326, 13.3014, 0.44461, -6.31333, 13.3014, 0.44461, -12.3133, 5.55137, 0.44461, -12.3133, 5.55137, 0.44461, 12.4367, 13.3014, 0.44461, 12.4367, 13.3014, 0.44461, 6.18667, -2.19863, 2.94461, 0.686667, -1.94863, 2.94461, 7.68667, -1.94863, 2.94461, 0.436667, -2.19863, 2.94461, -6.31333)
@@ -9,8 +12,22 @@ polygons = [PackedInt32Array(0, 2, 1), PackedInt32Array(4, 3, 5), PackedInt32Arr
 
 [node name="TestLevel" type="Node3D"]
 
+[node name="PlayerInLabel" type="Label" parent="." groups=["PlayerInLabel"]]
+offset_right = 293.0
+offset_bottom = 122.0
+text = "ewewwe"
+label_settings = SubResource("LabelSettings_8ub6m")
+
+[node name="EnemyState" type="Label" parent="." groups=["EnemyState"]]
+offset_left = 1.0
+offset_top = 63.0
+offset_right = 162.0
+offset_bottom = 115.0
+text = "ewewwe"
+label_settings = SubResource("LabelSettings_8ub6m")
+
 [node name="Player" parent="." instance=ExtResource("1_4yxtf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0798581, 0)
+transform = Transform3D(0.402603, 0, -0.915375, 0, 1, 0, 0.915375, 0, 0.402603, -6.74944, 0.0798581, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.733125, 0.494123, -0.467301, 0, 0.687113, 0.726551, 0.680094, -0.532652, 0.503739, -17.4002, 9.22812, 0)

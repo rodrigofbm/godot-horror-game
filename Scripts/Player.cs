@@ -1,9 +1,10 @@
 using Godot;
+using HorrorGame.Scripts.Contracts;
 using HorrorGame.Scripts.Enums;
 
 namespace HorrorGame.Scripts;
 
-public partial class Player : CharacterBody3D
+public partial class Player : CharacterBody3D, IDetectable
 {
 	private const float Speed = 5.0f;
 	private const float CrouchSpeed = 2.0f;

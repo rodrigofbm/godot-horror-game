@@ -1,29 +1,32 @@
-using System.Linq;
 using Godot;
 using HorrorGame.Scripts.Contracts;
 
 namespace HorrorGame.Scripts.EnemyStates;
 
-public class PatrolState : IState
+public class ChasingState : IState
 {
     private Enemy _enemy;
     
     public void Enter(CharacterBody3D character)
     {
         _enemy = (Enemy)character;
-        _enemy.Target = null;
-        _enemy.NavigationAgent.TargetPosition = _enemy.WayPoints.ToArray()[_enemy.CurrentWaitPointIndex].GlobalPosition;
+        if (_enemy.Target != null)
+        {
+            _enemy.NavigationAgent.TargetPosition = _enemy.Target.GlobalPosition;
+        }
     }
 
     public void Update(double delta)
     {
         if (_enemy.NavigationAgent.IsNavigationFinished())
         {
+            GD.Print("Attack!");
             _enemy.Timer.Start();
             _enemy.ChangeState(new WaitingState());
             return;
         }
-        _enemy.HandleMovement(_enemy.PatrolSpeed);
+        
+        _enemy.HandleMovement(_enemy.ChasingSpeed);
         _enemy.CheckForPlayer();
     }
 
