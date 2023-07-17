@@ -111,8 +111,19 @@ public partial class Enemy : CharacterBody3D
     	
         if (IsPlayerInSightClose)
         {
-            ChangeState(new ChasingState());
-            PlayerInLabel.Text = "SightClose";
+	        if (detectable is Player player)
+	        {
+		        if (!player.IsInDarkness)
+		        {
+			        ChangeState(new ChasingState());
+			        PlayerInLabel.Text = "SightClose";
+		        }
+	        }
+	        else
+	        {
+		        ChangeState(new ChasingState());
+		        PlayerInLabel.Text = "SightClose";
+	        } 
         }
     	
         if (IsPlayerInSightFar && !IsPlayerInSightClose)

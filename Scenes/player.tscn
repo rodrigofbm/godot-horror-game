@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://b0omjetudctsg"]
+[gd_scene load_steps=12 format=3 uid="uid://b0omjetudctsg"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_4ho2o"]
+[ext_resource type="PackedScene" uid="uid://dof34qddx68qq" path="res://Scenes/light_detect.tscn" id="2_toq2i"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_opgu4"]
 
@@ -306,6 +307,7 @@ script = ExtResource("1_4ho2o")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.989532, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_opgu4")
 
 [node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
@@ -327,3 +329,6 @@ libraries = {
 [node name="Flashlight" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.419, 1.34, -1.101)
 light_energy = 0.0
+
+[node name="LightDetect" parent="." instance=ExtResource("2_toq2i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.503797, 0)

@@ -30,7 +30,7 @@ label_settings = SubResource("LabelSettings_8ub6m")
 transform = Transform3D(0.402603, 0, -0.915375, 0, 1, 0, 0.915375, 0, 0.402603, -6.74944, 0.0798581, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.733125, 0.494123, -0.467301, 0, 0.687113, 0.726551, 0.680094, -0.532652, 0.503739, -17.4002, 9.22812, 0)
+transform = Transform3D(0.708982, 0.652733, -0.266992, -0.186593, 0.538722, 0.82156, 0.680094, -0.532652, 0.50374, -17.4002, 22.6404, 0)
 shadow_enabled = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]

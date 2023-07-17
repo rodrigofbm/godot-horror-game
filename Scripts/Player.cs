@@ -11,30 +11,35 @@ public partial class Player : CharacterBody3D, IDetectable
 	private const float JumpVelocity = 4.5f;
 	private const float MouseSensitivity = 3.0f;
 	public float CurrentSpeed { get; set; }
-
-	public Camera3D Camera3D { get; set; }
+	public Camera3D Camera3D { get; private set; }
 	public bool IsCrouch { get; private set; }
 	public bool IsFlashlightOn { get; private set; }
-	public AnimationPlayer AnimationPlayer { get; set; }
+	public AnimationPlayer AnimationPlayer { get; private set; }
+	public LightDetect LightDetect { get; private set; }
+	public double LightLevel { get; private set; }
+	public bool IsInDarkness { get; set; }
 
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+	private readonly float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
 	public override void _Ready()
 	{
 		CurrentSpeed = Speed;
 		Camera3D = GetNode<Camera3D>("Camera3D");
+		LightDetect = GetNode<LightDetect>("LightDetect");
 		AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
+		LightLevel = LightDetect.LightLevel;
+		IsInDarkness = IsCrouch && LightLevel <= 0.08f || !IsCrouch && LightLevel <= 0.04f;
+		GD.Print("IsInDarkness: " + IsInDarkness);
 		var velocity = Velocity;
 
 		// Add the gravity.
 		if (!IsOnFloor())
-			velocity.Y -= gravity * (float)delta;
+			velocity.Y -= _gravity * (float)delta;
 
 		// Handle Jump.
 		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
