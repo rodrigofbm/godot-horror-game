@@ -91,16 +91,13 @@ public partial class Enemy : CharacterBody3D
             ChangeState(new ChasingState());
             PlayerInLabel.Text = "EarshotClose";
         }
-    	
+    	   
         if (IsPlayerInEarshotFar && !IsPlayerInEarshotClose)
         {
-            if (detectable is Player player)
+            if (detectable is Player { IsCrouch: false })
             {
-                if (!player.IsCrouch)
-                {
-                    ChangeState(new HuntingState());
-                    PlayerInLabel.Text = "EarshotFar";
-                }
+	            ChangeState(new HuntingState());
+	            PlayerInLabel.Text = "EarshotFar";
             }
             else
             {
@@ -113,11 +110,9 @@ public partial class Enemy : CharacterBody3D
         {
 	        if (detectable is Player player)
 	        {
-		        if (!player.IsInDarkness)
-		        {
-			        ChangeState(new ChasingState());
-			        PlayerInLabel.Text = "SightClose";
-		        }
+		        if (player.IsInDarknessForClose) return;
+		        ChangeState(new ChasingState());
+		        PlayerInLabel.Text = "SightClose";
 	        }
 	        else
 	        {
@@ -128,8 +123,17 @@ public partial class Enemy : CharacterBody3D
     	
         if (IsPlayerInSightFar && !IsPlayerInSightClose)
         {
-            ChangeState(new HuntingState());
-            PlayerInLabel.Text = "InSightFar";
+	        if (detectable is Player player)
+	        {
+		        if (player.IsInDarknessForFar) return;
+		        ChangeState(new HuntingState());
+		        PlayerInLabel.Text = "InSightFar";
+	        }
+	        else
+	        {
+		        ChangeState(new HuntingState());
+		        PlayerInLabel.Text = "InSightFar";
+	        } 
         }
     }
 	

@@ -17,7 +17,8 @@ public partial class Player : CharacterBody3D, IDetectable
 	public AnimationPlayer AnimationPlayer { get; private set; }
 	public LightDetect LightDetect { get; private set; }
 	public double LightLevel { get; private set; }
-	public bool IsInDarkness { get; set; }
+	public bool IsInDarknessForClose { get; set; }
+	public bool IsInDarknessForFar { get; set; }
 
 	private readonly float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
@@ -33,8 +34,8 @@ public partial class Player : CharacterBody3D, IDetectable
 	public override void _PhysicsProcess(double delta)
 	{
 		LightLevel = LightDetect.LightLevel;
-		IsInDarkness = IsCrouch && LightLevel <= 0.08f || !IsCrouch && LightLevel <= 0.04f;
-		GD.Print("IsInDarkness: " + IsInDarkness);
+		IsInDarknessForClose = !(LightLevel > 0.3f || (IsCrouch && LightLevel > 0.4f));
+		IsInDarknessForFar = !(LightLevel > 0.5f || (IsCrouch && LightLevel > 0.6f));
 		var velocity = Velocity;
 
 		// Add the gravity.

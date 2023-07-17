@@ -23,7 +23,7 @@ render_target_update_mode = 4
 [node name="Camera3D" type="Camera3D" parent="Container/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.659447, 0)
 projection = 1
-size = 0.1
+size = 0.25987
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
