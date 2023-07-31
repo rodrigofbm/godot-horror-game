@@ -53,16 +53,16 @@ public partial class Player : CharacterBody3D
 
 	public override void _Input(InputEvent @event)
 	{
-		base._Input(@event);
-		if (@event is InputEventMouseMotion mouseEventMouseMotion)
-		{
-			// Horizontal look
-			var yOffset = Rotation.Y - mouseEventMouseMotion.Relative.X / 1000f * MouseSensitivity;
-			Rotation = new Vector3(Rotation.X, yOffset, Rotation.Z);
-			
-			// Vertical look
-			var xOffset = Camera3D.Rotation.X - mouseEventMouseMotion.Relative.Y / 1000f * MouseSensitivity;
-			Camera3D.Rotation = new Vector3(Mathf.Clamp(xOffset, -2f, 2f), Camera3D.Rotation.Y, Camera3D.Rotation.Z);
-		}
+		if (@event is not InputEventMouseMotion motion)
+			return;
+
+		// Horizontal look
+		var yOffset = Rotation.Y - motion.Relative.X / 1000f * MouseSensitivity;
+		Rotation = new Vector3(Rotation.X, yOffset, Rotation.Z);
+
+		// Vertical look
+		var camRot = Camera3D.Rotation;
+		var xOffset = Camera3D.Rotation.X - motion.Relative.Y / 1000f * MouseSensitivity;
+		Camera3D.Rotation = new Vector3(Mathf.Clamp(xOffset, -2f, 2f), camRot.Y, camRot.Z);
 	}
 }
